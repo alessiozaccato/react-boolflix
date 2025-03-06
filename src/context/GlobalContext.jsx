@@ -7,43 +7,58 @@ const GlobalProvider = ({ children }) => {
 
     const [movies, setMovies] = useState([])// dal main
 
-    const [searchMovies, setSearchMovies] = useState('')// dall'header
+    const [series, setSeries] = useState([])// del main
+
+    const [search, setSearch] = useState('')// dall'header  
 
 
     const baseUrl = import.meta.env.VITE_ENDPOINT_URL
 
     const apiAuth = import.meta.env.VITE_API_AUTH
 
-    const options = {
-        method: 'GET',
-        url: baseUrl + `movie?query=${searchMovies}`,
-        headers: {
-            accept: 'application/json',
-            Authorization: `Bearer ${apiAuth}`
-        }
-    };
+
 
     const handleSearch = (e) => {
-        setSearchMovies(e.target.value)
+        setSearch(e.target.value)
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        fetchMovies()
+        fetchData()
     }
 
-    const fetchMovies = () => {
+    const fetchData = () => {
+
+        const options = {
+            method: 'GET',
+            url: baseUrl + `movie?query=${search}`,
+            headers: {
+                accept: 'application/json',
+                Authorization: `Bearer ${apiAuth}`
+            }
+        };
+
         axios
             .request(options)
             .then(res => setMovies(res.data.results))
             .catch(err => console.error(err));
+
+        options.url = baseUrl + `tv?query=${search}`
+
+        axios
+            .request(options)
+            .then(res => setSeries(res.data.results))
+            .catch(err => console.error(err));
     }
+
+
 
     const value = {
         movies,
+        series,
         handleSearch,
         handleSubmit,
-        fetchMovies
+        fetchData
     }
 
 
