@@ -51,14 +51,14 @@ const Main = () => {
 
     return (
         <div className="container">
-
-            <section className="row row-cols-4">
+            <h1 className="text-center">FILMS</h1>
+            <section className="row row-cols-3">
 
                 {
 
                     movies.map((movie) => {
                         return (
-                            <div className="card my-3" key={movie.id}>
+                            <div className="card my-1 " key={movie.id}>
                                 <img src={`${imageUrl}w342${movie.poster_path}`} alt={movie.title} />
                                 <p>titolo: {movie.title}</p>
                                 <p>titolo originale: {movie.original_title}</p>
@@ -69,17 +69,21 @@ const Main = () => {
                         )
                     })
                 }
+
             </section >
+            <h1 className="text-center">SERIES</h1>
             <section className="row row-cols-4">
 
                 {
                     series.map((serie) => {
                         return (
                             <div className="card my-3" key={serie.id}>
+                                <img src={`${imageUrl}w342${serie.poster_path}`} alt={serie.title} />
                                 <p>titolo: {serie.name}</p>
                                 <p>titolo originale: {serie.original_title}</p>
-                                <p>lingua: {serie.original_language} </p>
-                                <p>voto: {serie.vote_average}</p>
+                                {/* <p>lingua: {serie.original_language} </p> */}
+                                <span className={`fi fi-${serie.original_language == "en" ? "gb" : serie.original_language}`} > </span>
+                                <p>voto: {newStars(serie.vote_average)}</p>
                             </div>
                         )
                     })
