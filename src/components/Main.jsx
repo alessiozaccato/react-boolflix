@@ -35,8 +35,6 @@ const Main = () => {
 
         return result + result2
 
-
-
     }
 
 
@@ -49,7 +47,7 @@ const Main = () => {
         fetchData()
     }, [])
 
-
+    const imageUrl = import.meta.env.VITE_URL_IMAGE
 
     return (
         <div className="container">
@@ -61,15 +59,17 @@ const Main = () => {
                     movies.map((movie) => {
                         return (
                             <div className="card my-3" key={movie.id}>
+                                <img src={`${imageUrl}w342${movie.poster_path}`} alt={movie.title} />
                                 <p>titolo: {movie.title}</p>
                                 <p>titolo originale: {movie.original_title}</p>
-                                <p>lingua: {movie.original_language} </p>
+                                {/* <p>lingua: {movie.original_language} </p> */}
+                                <span className={`fi fi-${movie.original_language == "en" ? "gb" : movie.original_language}`} > </span>
                                 <p>voto: {newStars(movie.vote_average)}</p>
                             </div>
                         )
                     })
                 }
-            </section>
+            </section >
             <section className="row row-cols-4">
 
                 {
@@ -87,7 +87,7 @@ const Main = () => {
             </section>
 
 
-        </div>
+        </div >
 
 
     )
